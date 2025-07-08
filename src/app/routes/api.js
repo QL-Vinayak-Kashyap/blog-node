@@ -7,5 +7,7 @@ const AuthController = require('../controllers/AuthController');
 
 router.post('/login', AuthController.login);
 router.get('/users',AuthController.users);
+router.get("/getUserDetailsById", AuthController.getUserDetailsById);
+router.get('/getUserDetailsByToken', AuthController.getUserDetailsByToken);
 
 module.exports = {router};
