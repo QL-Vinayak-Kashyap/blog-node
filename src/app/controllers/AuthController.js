@@ -3,21 +3,20 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const AuthService = require('../services/AuthService');
+const UserService = require('../services/UserService');
 const LoginResponse = require('../resources/LoginResponce');
+const RegistrationResponse = require('../resources/RegistrationResponse');
 
 exports.login = async (request, response, next) => {
     try {
         // login logic
         const { email, password } = request.body;
-        const user = await AuthService.getUserByEmail(email);
+        const user = await UserService.getUserByEmail(email);
         if (!user) {
             return responder(response, false, 'USER_NOT_FOUND', null);
         }
-        console.log('Login request received:', password, user.dataValues.password);
-        const normalizedHash = user.dataValues.password.replace(/^\$2y\$/, '$2a$');
-        const isPasswordValid = await bcrypt.compare(password, normalizedHash);
+        const isPasswordValid = await bcrypt.compare(password, user.password);
 
-        console.log('Password validation result:', isPasswordValid);
         if (!isPasswordValid) {
             return responder(response, false, 'INVALID_CREDS', null);
         }
@@ -30,43 +29,37 @@ exports.login = async (request, response, next) => {
     }
 }
 
-exports.users = async (request, response, next) => {
+exports.register = async (request, response, next) => {
     try {
-        const users = await AuthService.getUserByEmail("vinayak@gmail.com");
-        return responder(response, true, 'SUCCESS', { users }, 200);
-    } catch (error) {
-        return responder(response, false, 'ERROR', null, 500);
+        const {full_name, email, password, role} = request.body;
+        const isEmailExists = await UserService.getUserByEmail(email);
+        if(isEmailExists){
+            return responder(response,false, 'EMAIL_EXISTS', null);
+        }
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const user = await AuthService.registerUser({
+            full_name,email, password: hashedPassword, role});
+        if (!user) {
+            return responder(response, false, 'ERROR_REGISTERING_USER', null);
+        }
+        return responder(response, true, 'USER_REGISTERED_SUCCESSFULLY',await new RegistrationResponse({user}).exec());
+    } catch (error){
+        console.error('Registration error:', error);
+        return responder(response, false, 'ERROR_REGISTERING_USER', null, 500);
     }
 }
 
-exports.getUserDetailsById = async (request, response, next) => {
+exports.deleteUser = async (request, response, next) => {
     try {
-        const { userId } = request.body;
+        const userId = request.user.id; // Assuming user ID is stored in request.user
         const user = await AuthService.getUserById(userId);
         if (!user) {
             return responder(response, false, 'USER_NOT_FOUND', null);
         }
-        return responder(response, true, 'SUCCESS', { user }, 200);
+        await AuthService.deleteUser(userId);
+        return responder(response, true, 'USER_DELETED_SUCCESSFULLY', null);
     } catch (error) {
-        console.error('Error fetching user details:', error);
+        console.error('Delete user error:', error);
         return responder(response, false, 'ERROR', null, 500);
     }
-}
-
-exports.getUserDetailsByToken = async (request, response, next) => {
-    try {
-        const token = request.headers.authorization?.split(' ')[1];
-        if (!token) {
-            return responder(response, false, 'ERROR', null, 401);
-        }
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await AuthService.getUserById(decoded.id);
-        if (!user) {
-            return responder(response, false, 'USER_NOT_FOUND', null);
-        }
-        return responder(response, true, 'SUCCESS', { user }, 200);
-    } catch (error) {
-        console.error('Error fetching user details by token:', error);
-        return responder(response, false, 'ERROR', null, 500);
-    }
-}
+} 

@@ -1,9 +1,9 @@
 const User = require("../Models/User");
 
-exports.getUserByEmail = async (email) => {
-    return await User.findOne({where: {email: email}});
+exports.registerUser = async (userData) => {
+    return await User.create(userData);
 }
 
-exports.getUserById = async (userId) => {
-    return await User.findOne({where: {id: userId}});
+exports.deleteUser = async (userId) => {
+    return await User.destroy({ where: { id: userId } });
 }

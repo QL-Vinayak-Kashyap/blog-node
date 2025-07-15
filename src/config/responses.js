@@ -3,4 +3,18 @@ module.exports = {
     "ERROR": "An error occurred during the operation",
     "USER_NOT_FOUND": "User not found",
     "INVALID_CREDS": "Invalid credentials provided",
+    "TOKEN_NOT_FOUND": "Authentication token not found",
+    "INVALID_TOKEN": "The provided token is invalid",
+    "EMAIL_EXISTS": "Email already exists",
+    "USER_REGISTERED_SUCCESSFULLY": "User registered successfully",
+    "ERROR_REGISTERING_USER": "An error occurred while registering the user",
+    "USER_DELETED_SUCCESSFULLY": "User deleted successfully",
+    "TOPICS_NOT_FOUND": "No topics found for the user",
+    "TOPIC_FETCHED_SUCCESSFULLY": "Topics fetched successfully",
+    "ERROR_CREATING_TOPIC": "An error occurred while creating the topic",
+    "TOPIC_CREATED_SUCCESSFULLY": "Topic created successfully",
+    "TOPIC_UPDATED_SUCCESSFULLY": "Topic updated successfully",
+    "ERROR_UPDATING_TOPIC": "An error occurred while updating the topic",
+    "TOPIC_DELETED_SUCCESSFULLY": "Topic deleted successfully",
+    "ERROR_DELETING_TOPIC": "An error occurred while deleting the topic"
 }
