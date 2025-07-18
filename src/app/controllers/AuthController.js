@@ -2,10 +2,10 @@ const responder = require('../../utils/responder');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const AuthService = require('../services/AuthService');
-const UserService = require('../services/UserService');
-const LoginResponse = require('../resources/LoginResponce');
-const RegistrationResponse = require('../resources/RegistrationResponse');
+const AuthService = require('../../services/AuthService');
+const UserService = require('../../services/UserService');
+const LoginResponse = require('../../resources/LoginResponce');
+const RegistrationResponse = require('../../resources/RegistrationResponse');
 
 exports.login = async (request, response, next) => {
     try {

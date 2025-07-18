@@ -1,6 +1,6 @@
 const responder = require('../../utils/responder');
-const UserService = require('../services/UserService');
-const TopicService = require('../services/TopicService');
+const UserService = require('../../services/UserService');
+const TopicService = require('../../services/TopicService');
 
 exports.getTopicsByUserId = async (request, response, next) => { 
     try {
@@ -23,7 +23,7 @@ exports.getTopicsByUserId = async (request, response, next) => {
     }
  };
 
-exports.createTopic = async (request, response, next) => { 
+exports.createTopic = async (request, response, next) => {
     try {
         const { name } = request.body;
         const userId = request.user.id; // Assuming user ID is stored in request.user
@@ -60,7 +60,6 @@ exports.updateTopic = async (request, response, next) => {
     } catch (error) {
         console.error('Error updating topic:', error);
         return responder(response, false, 'ERROR_UPDATING_TOPIC', null);
-        
     }
  };
 
