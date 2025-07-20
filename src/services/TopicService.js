@@ -2,16 +2,22 @@ const Topic = require('../Models/Topic'); // Assuming you have a Topic model def
 
 exports.getTopicsByUserId =async (userId) =>{
     return Topic.findAll({
-        where: { userId: userId }
+        where: { user_id: userId }
     });
 }
 
 exports.createTopic = async (topicData) => {
+    console.log('Creating topic with data:', topicData);
     return Topic.create(topicData);
 }
 
 exports.getTopicById = async (topicId) => {
-    return Topic.findByPk(topicId);
+    const topic = await Topic.findByPk(3);
+    if (!topic) {
+        console.log('Topic not found for ID:', topicId);
+        return null;
+    }
+    return topic;   
 }
 
 exports.updateTopic = async (topicId, updateData) => {

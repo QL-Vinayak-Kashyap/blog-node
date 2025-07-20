@@ -10,6 +10,7 @@ module.exports = {
     "ERROR_REGISTERING_USER": "An error occurred while registering the user",
     "USER_DELETED_SUCCESSFULLY": "User deleted successfully",
     "TOPICS_NOT_FOUND": "No topics found for the user",
+    "TOPIC_NOT_FOUND": "Topic not found",
     "TOPIC_FETCHED_SUCCESSFULLY": "Topics fetched successfully",
     "ERROR_CREATING_TOPIC": "An error occurred while creating the topic",
     "TOPIC_CREATED_SUCCESSFULLY": "Topic created successfully",

@@ -4,8 +4,8 @@ const jwt = require('jsonwebtoken');
 
 const AuthService = require('../../services/AuthService');
 const UserService = require('../../services/UserService');
-const LoginResponse = require('../../resources/LoginResponce');
-const RegistrationResponse = require('../../resources/RegistrationResponse');
+const LoginResponse = require('../../resources/AuthResponses/LoginResponce');
+const RegistrationResponse = require('../../resources/AuthResponses/RegistrationResponse');
 
 exports.login = async (request, response, next) => {
     try {

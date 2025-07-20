@@ -1,5 +1,6 @@
 const { DataTypes, Model } = require("sequelize");
 const sequelize = require("../config/databases");
+const Topic = require("./Topic");
 
 class User extends Model { }
 
@@ -38,8 +39,21 @@ User.init(
     timestamps: true,
     createdAt: "created_at",
     updatedAt: "updated_at",
-    underscored: true, // optional but matches snake_case style
   }
 );
+
+User.hasMany(
+  Topic, // Assuming you have a Topic model
+  {
+    foreignKey: "user_id",
+    as: "topics", // Alias for the association
+    onDelete: "CASCADE", // Optional: define what happens on delete
+  }
+)
+
+Topic.belongsTo(User,{
+  foreignKey: "user_id",
+  as: "user", // Alias for the association
+});
 
 module.exports = User;

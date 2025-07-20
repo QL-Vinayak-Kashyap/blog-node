@@ -26,6 +26,4 @@ router.delete('/delete-topic/:id', isAuthenticated, TopicController.deleteTopic)
 
 // Post related routes
 
-
-
 module.exports = {router};

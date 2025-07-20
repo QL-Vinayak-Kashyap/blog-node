@@ -1,6 +1,8 @@
 const {DataTypes, Model} = require('sequelize'); 
 
 const sequelize = require('../config/databases');
+const User = require('./User');
+const Post = require('./Post');
 
 class Topic extends Model { }
 
@@ -16,13 +18,13 @@ Topic.init(
             type: DataTypes.STRING(255), // matches DB  
             allowNull: false,
         },
-        userId: {
+        user_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: 'users', // Assuming you have a users table
+                model: 'User',
                 key: 'id'
-            } 
+              }
         }
     },{
         sequelize,
@@ -33,5 +35,15 @@ Topic.init(
         updatedAt: 'updated_at'
     }
 )
+
+
+// Topic.hasMany(
+//     Post,
+//     {
+//         foreignKey: 'topicId',
+//         as: 'posts', // Alias for the association
+//         onDelete: 'CASCADE', // Optional: define what happens on delete     
+//     }
+// ); // Assuming you have an Activity model
 
 module.exports = Topic;

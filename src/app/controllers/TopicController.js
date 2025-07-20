@@ -1,6 +1,8 @@
 const responder = require('../../utils/responder');
 const UserService = require('../../services/UserService');
 const TopicService = require('../../services/TopicService');
+const TopicsResponse = require('../../resources/TopicResponses/TopicsResponse');
+const CreateTopicResponse = require('../../resources/TopicResponses/CreateTopicResponse');
 
 exports.getTopicsByUserId = async (request, response, next) => { 
     try {
@@ -16,7 +18,8 @@ exports.getTopicsByUserId = async (request, response, next) => {
         if (!topics) {
             return responder(response, false, 'TOPICS_NOT_FOUND', null);
         }
-        return responder(response, true, 'TOPIC_FETCHED_SUCCESSFULLY', topics);
+        console.log('Fetched topics:', topics);
+        return responder(response, true, 'TOPIC_FETCHED_SUCCESSFULLY',await TopicsResponse.collection(topics));
     } catch (error) {
         console.error('Error fetching topics:', error);
         return responder(response, false, 'ERROR', null);
@@ -29,20 +32,21 @@ exports.createTopic = async (request, response, next) => {
         const userId = request.user.id; // Assuming user ID is stored in request.user
 
         // Create topic
-        const topic = await TopicService.createTopic({name, userId});
+        const topic = await TopicService.createTopic({name, user_id: userId});
         if (!topic) {
             return responder(response, false, 'ERROR_CREATING_TOPIC', null);
         }
-        return responder(response, true, 'TOPIC_CREATED_SUCCESSFULLY', topic);
+        return responder(response, true, 'TOPIC_CREATED_SUCCESSFULLY', await new CreateTopicResponse(topic).exec());
         
     } catch (error) {
-        
+        console.error('Error creating topic:', error);
+        return responder(response, false, 'ERROR_CREATING_TOPIC', null);
     }
  };
 
 exports.updateTopic = async (request, response, next) => {
     try {
-        const topicId = request.params.topicId; // Assuming topic ID is passed as a URL parameter
+        const topicId = request.params.id; // Assuming topic ID is passed as a URL parameter
         //check if the topic exists
         const topic = await TopicService.getTopicById(topicId);
         if (!topic) {
@@ -51,11 +55,11 @@ exports.updateTopic = async (request, response, next) => {
         const { name } = request.body;
 
         // Update topic
-        const updatedTopic = await TopicService.updateTopic(topicId, { name });
+        const updatedTopic = await TopicService.updateTopic(topicId, {name} );
         if (!updatedTopic) {
             return responder(response, false, 'ERROR_UPDATING_TOPIC', null);
         }
-        return responder(response, true, 'TOPIC_UPDATED_SUCCESSFULLY', updatedTopic);
+        return responder(response, true, 'TOPIC_UPDATED_SUCCESSFULLY', await new UpdateTopicResponse(updatedTopic).exec()); 
 
     } catch (error) {
         console.error('Error updating topic:', error);
@@ -65,7 +69,7 @@ exports.updateTopic = async (request, response, next) => {
 
 exports.deleteTopic = async (request, response, next) => { 
     try {
-        const topicId = request.params.topicId; // Assuming topic ID is passed as a URL parameter
+        const topicId = request.params.id; // Assuming topic ID is passed as a URL parameter
         // Check if the topic exists
         const topic = await TopicService.getTopicById(topicId);
         if (!topic) {

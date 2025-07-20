@@ -1,5 +1,5 @@
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../../config/databases'); // Assuming you have a sequelize instance exported from this file
+const sequelize = require('../config/databases'); // Assuming you have a sequelize instance exported from this file
 
 class Post extends Model { }
 
@@ -20,20 +20,11 @@ Post.init(
         userId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            references: {
-                model: 'users', // Assuming you have a users table
-                key: 'id'
-            }
         },
         topicId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            references: {
-                model: 'topics', // Assuming you have a topics table
-                key: 'id'
-            }
         },
-
     },{
         sequelize,
         modelName: 'Post',
