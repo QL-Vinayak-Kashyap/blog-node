@@ -1,6 +1,7 @@
 const { DataTypes, Model } = require("sequelize");
 const sequelize = require("../config/databases");
 const Topic = require("./Topic");
+const Post = require("./Post");
 
 class User extends Model { }
 
@@ -53,6 +54,20 @@ User.hasMany(
 
 Topic.belongsTo(User,{
   foreignKey: "user_id",
+  as: "user", // Alias for the association
+});
+
+User.hasMany(
+  Post, // Assuming you have a Post model
+  {
+    foreignKey: "user_id",
+    as: "post", // Alias for the association
+    onDelete: "CASCADE", // Optional: define what happens on delete
+  }
+);
+
+Post.belongsTo(User, {
+  foreignKey: "user_id",  
   as: "user", // Alias for the association
 });
 

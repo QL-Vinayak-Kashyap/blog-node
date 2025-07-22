@@ -1,6 +1,6 @@
 const {Model, DataTypes} =require('sequelize');
 
-const sequelize = require('../../config/databases'); // Assuming you have a sequelize instance exported from this file
+const sequelize = require('../config/databases'); // Assuming you have a sequelize instance exported from this file
 
 
 class Image extends Model { }
@@ -21,11 +21,11 @@ Image.init(
             type: DataTypes.STRING(255),
             allowNull: false,
         },
-        postId: {
+        post_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: 'posts', // Assuming you have a posts table
+                model: 'Post', // Assuming you have a posts table
                 key: 'id'
             }
         },

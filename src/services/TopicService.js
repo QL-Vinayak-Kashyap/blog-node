@@ -7,7 +7,6 @@ exports.getTopicsByUserId =async (userId) =>{
 }
 
 exports.createTopic = async (topicData) => {
-    console.log('Creating topic with data:', topicData);
     return Topic.create(topicData);
 }
 

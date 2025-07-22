@@ -3,8 +3,9 @@ const UserService = require('../../services/UserService');
 const TopicService = require('../../services/TopicService');
 const TopicsResponse = require('../../resources/TopicResponses/TopicsResponse');
 const CreateTopicResponse = require('../../resources/TopicResponses/CreateTopicResponse');
+const UpdateTopicResponse = require('../../resources/TopicResponses/UpdateTopicResponse');
 
-exports.getTopicsByUserId = async (request, response, next) => { 
+exports.getTopicsByUserId = async (request, response, next) => {
     try {
         const userId = request.params.userId; // Assuming user ID is passed as a URL parameter
 
@@ -18,8 +19,7 @@ exports.getTopicsByUserId = async (request, response, next) => {
         if (!topics) {
             return responder(response, false, 'TOPICS_NOT_FOUND', null);
         }
-        console.log('Fetched topics:', topics);
-        return responder(response, true, 'TOPIC_FETCHED_SUCCESSFULLY',await TopicsResponse.collection(topics));
+        return responder(response, true, 'TOPIC_FETCHED_SUCCESSFULLY', TopicsResponse.collection(topics));
     } catch (error) {
         console.error('Error fetching topics:', error);
         return responder(response, false, 'ERROR', null);

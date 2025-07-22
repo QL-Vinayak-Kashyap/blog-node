@@ -21,6 +21,7 @@ const PORT = process.env.PORT || 4000;
 sequelize.authenticate()
   .then(() => {
     server.listen(PORT, () => {
+      console.clear()
       console.log(`Server is running on http://localhost:${PORT}`);
     });
   })

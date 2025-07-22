@@ -21,10 +21,10 @@ Topic.init(
         user_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            references: {
-                model: 'User',
-                key: 'id'
-              }
+            // references: {
+            //     model: 'User',
+            //     key: 'id'
+            //   }
         }
     },{
         sequelize,
@@ -37,13 +37,21 @@ Topic.init(
 )
 
 
-// Topic.hasMany(
-//     Post,
-//     {
-//         foreignKey: 'topicId',
-//         as: 'posts', // Alias for the association
-//         onDelete: 'CASCADE', // Optional: define what happens on delete     
-//     }
-// ); // Assuming you have an Activity model
+Topic.hasMany(
+    Post,
+    {
+        foreignKey: 'topic_id',
+        as: 'posts', // Alias for the association
+        onDelete: 'CASCADE', // Optional: define what happens on delete     
+    }
+); // Assuming you have an Activity model
+
+Post.belongsTo(
+    Topic,  
+    {
+        foreignKey: 'topic_id',
+        as: 'topic', // Alias for the association
+    }
+); // Assuming you have an Activity model
 
 module.exports = Topic;
