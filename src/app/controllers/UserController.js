@@ -1,4 +1,5 @@
 const responder = require("../../utils/responder");
+const UserService = require("../../services/UserService");
 
 exports.users = async (request, response, next) => {
     try {
@@ -36,3 +37,26 @@ exports.getUserDetailsByToken = async (request, response, next) => {
         return responder(response, false, 'ERROR', null, 500);
     }
 }
+
+// exports.uploadImage = async (request, response, next) => {
+//     try {
+//         const userId = request.user.id; // Assuming user ID is stored in request.user
+//         const image = request.file; // Assuming the image is uploaded as a file
+
+//         if (!image) {
+//             return responder(response, false, 'IMAGE_NOT_UPLOADED', null);
+//         }
+
+//         // Save the image to the database or file system as needed
+//         const savedImage = await UserService.saveUserImage(userId, image);
+
+//         if (!savedImage) {
+//             return responder(response, false, 'ERROR_SAVING_IMAGE', null);
+//         }
+
+//         return responder(response, true, 'IMAGE_UPLOADED_SUCCESSFULLY', { image: savedImage }, 200);
+//     } catch (error) {
+//         console.error('Error uploading image:', error);
+//         return responder(response, false, 'ERROR_UPLOADING_IMAGE', null);
+//     }
+// }

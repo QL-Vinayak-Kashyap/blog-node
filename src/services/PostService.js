@@ -1,4 +1,5 @@
-const Post = require("../Models/Post")
+const Image = require("../models/Image");
+const Post = require("../models/Post")
 
 exports.createPost = async (postData)=> {
     return Post.create(postData);
@@ -8,7 +9,11 @@ exports.getPostById = async (postId) => {
     return Post.findOne({
         where: {
             id: postId
-        }
+        },
+        include: [{
+            model: Image,
+            as: 'images' // Assuming you have an association set up for images
+        }]
     });
 }
 
@@ -43,4 +48,12 @@ exports.deletePost = async (postId) => {
             id: postId
         }
     });
+}
+
+exports.savePostImage = async (postId, image) => {
+    return Image.create({
+        post_id: postId,
+        url: image.path, // Assuming image.path contains the path to the uploaded image
+        name: image.originalname // Extracting the file name from the path
+    })    
 }

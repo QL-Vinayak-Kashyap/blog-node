@@ -1,6 +1,6 @@
 const {Model, DataTypes} = require('sequelize');
 
-const sequelize = require('../../config/databases'); // Assuming you have a sequelize instance exported from this file
+const sequelize = require('../config/databases'); // Assuming you have a sequelize instance exported from this file
 
 class Activity extends Model { }
 
@@ -20,7 +20,7 @@ Activity.init(
             type: DataTypes.TEXT,
             allowNull: true,
         },
-        userId: {
+        user_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
@@ -28,7 +28,7 @@ Activity.init(
                 key: 'id'
             }
         },
-        postId: {
+        post_id: {
             type: DataTypes.INTEGER,
             allowNull: true,
             references: {
@@ -36,12 +36,19 @@ Activity.init(
                 key: 'id'
             }
         },
-        topicId: {
+        topic_id: {
             type: DataTypes.INTEGER,
             allowNull: true,
             references: {
                 model: 'topics', // Assuming you have a topics table
                 key: 'id'
+            }
+        },
+        activityType: {
+            type: DataTypes.ENUM('LIKE', 'COMMENT'),
+            allowNull: false,
+            validate: {
+                isIn: [['LIKE', 'COMMENT']]
             }
         },
     },{

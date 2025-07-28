@@ -1,4 +1,4 @@
-const Topic = require('../Models/Topic'); // Assuming you have a Topic model defined
+const Topic = require('../models/Topic'); // Assuming you have a Topic model defined
 
 exports.getTopicsByUserId =async (userId) =>{
     return Topic.findAll({
@@ -13,7 +13,6 @@ exports.createTopic = async (topicData) => {
 exports.getTopicById = async (topicId) => {
     const topic = await Topic.findByPk(3);
     if (!topic) {
-        console.log('Topic not found for ID:', topicId);
         return null;
     }
     return topic;   

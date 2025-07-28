@@ -14,7 +14,15 @@ exports.createPost = async (request, response, next) => {
         if (!post) {
             return responder(response, false, 'ERROR_CREATING_POST', null);
         }
-        console.log('Post created successfully:', post);
+
+        // now save the image if it exists
+        if (request.file) {
+           const image = await PostService.savePostImage(post.id, request.file);
+           if(!image) {
+                return responder(response, false, 'ERROR_SAVING_POST_IMAGE', null);
+            }
+        }
+
         return responder(response, true, 'POST_CREATED_SUCCESSFULLY', await new CreatePostResponse(post).exec());
 
     } catch (error) {
