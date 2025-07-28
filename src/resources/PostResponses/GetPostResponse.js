@@ -19,11 +19,10 @@ class ImageResponse extends Resources {
     toArray() {
         return {
             id: this.id || "",
-            url: this.url || "",
-            name: this.name || ""
+            name: this.name || "",
+            url: this.url || ""
         };
     }
 }
-
 
 module.exports = GetPostResponse;
