@@ -10,7 +10,7 @@ sequelize.authenticate()
   .then(() => {
     server.listen(PORT, () => {
       console.clear()
-      console.log(`Server is running on http://localhost:${PORT}`);
+      console.log(`Server is running on PORT:${PORT}`);
     });
   })
   .catch(err => {
