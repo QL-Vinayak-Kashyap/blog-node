@@ -54,7 +54,7 @@ exports.getActivityByPostId = async (req, res, next) => {
 
 exports.updateActivity = async (req, res, next) => {
     try {
-        const activityId = req.params.activity_id;
+        const activityId = req.params.activityId;
         const updatedData = req.body;
 
         if (!activityId || !updatedData) {
@@ -85,7 +85,7 @@ exports.updateActivity = async (req, res, next) => {
 
 exports.deleteActivity = async (req, res, next) => {
     try {
-        const activityId = req.params.activity_id;
+        const activityId = req.params.activityId;
 
         if (!activityId) {
             return responder(res, 400, 'ACTIVITY ID IS REQUIRED');

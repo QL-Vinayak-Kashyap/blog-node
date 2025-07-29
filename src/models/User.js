@@ -31,6 +31,10 @@ User.init(
     password: {
       type: DataTypes.STRING(100), // match DB
       allowNull: false,
+    },
+    is_deleted :{
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
     }
   },
   {

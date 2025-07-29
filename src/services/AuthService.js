@@ -5,5 +5,11 @@ exports.registerUser = async (userData) => {
 }
 
 exports.deleteUser = async (userId) => {
-    return await User.destroy({ where: { id: userId } });
+    // WE WILL UPDATE THE USER TO SOFT DELETE INSTEAD OF HARD DELETE
+
+    return await User.update({ is_deleted: 1 }, {
+        where: { id: userId }
+    });
+
+    // return await User.destroy({ where: { id: userId } });
 }

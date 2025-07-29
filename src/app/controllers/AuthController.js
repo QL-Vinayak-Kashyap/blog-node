@@ -4,8 +4,10 @@ const jwt = require('jsonwebtoken');
 
 const AuthService = require('../../services/AuthService');
 const UserService = require('../../services/UserService');
-const LoginResponse = require('../../resources/AuthResponses/LoginResponce');
+const LoginResponse = require('../../resources/AuthResponses/LoginResponse');
 const RegistrationResponse = require('../../resources/AuthResponses/RegistrationResponse');
+const { create } = require('../../models/Image');
+const { createToken } = require('../../utils/Token/CreateToken');
 
 exports.login = async (request, response, next) => {
     try {
@@ -20,7 +22,8 @@ exports.login = async (request, response, next) => {
         if (!isPasswordValid) {
             return responder(response, false, 'INVALID_CREDS', null);
         }
-        const token = await jwt.sign({ id: user.id, email: user.email, role: user.role }, process.env.JWT_SECRET);
+        const token = await createToken(user);
+        // const token = await jwt.sign({ id: user.id, email: user.email, role: user.role }, process.env.JWT_SECRET);
 
         return responder(response, true, 'SUCCESS',await new LoginResponse({ user, token }).exec());
     } catch (error) {
@@ -42,7 +45,7 @@ exports.register = async (request, response, next) => {
         if (!user) {
             return responder(response, false, 'ERROR_REGISTERING_USER', null);
         }
-        return responder(response, true, 'USER_REGISTERED_SUCCESSFULLY',await new RegistrationResponse({user}).exec());
+        return responder(response, true, 'USER_REGISTERED_SUCCESSFULLY');
     } catch (error){
         console.error('Registration error:', error);
         return responder(response, false, 'ERROR_REGISTERING_USER', null, 500);
@@ -62,4 +65,4 @@ exports.deleteUser = async (request, response, next) => {
         console.error('Delete user error:', error);
         return responder(response, false, 'ERROR', null, 500);
     }
-} 
+}
