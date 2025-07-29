@@ -2,12 +2,10 @@ const responder = require('../../utils/responder');
 const UserService = require('../../services/UserService');
 const TopicService = require('../../services/TopicService');
 const TopicsResponse = require('../../resources/TopicResponses/TopicsResponse');
-const CreateTopicResponse = require('../../resources/TopicResponses/CreateTopicResponse');
-const UpdateTopicResponse = require('../../resources/TopicResponses/UpdateTopicResponse');
 
 exports.getTopicsByUserId = async (request, response, next) => {
     try {
-        const userId = request.params.userId; // Assuming user ID is passed as a URL parameter
+        const userId = request.user.id;
 
         // first check if the user exists
         const user = await UserService.getUserById(userId);
@@ -36,7 +34,7 @@ exports.createTopic = async (request, response, next) => {
         if (!topic) {
             return responder(response, false, 'ERROR_CREATING_TOPIC', null);
         }
-        return responder(response, true, 'TOPIC_CREATED_SUCCESSFULLY', await new CreateTopicResponse(topic).exec());
+        return responder(response, true, 'TOPIC_CREATED_SUCCESSFULLY');
         
     } catch (error) {
         console.error('Error creating topic:', error);
@@ -59,7 +57,7 @@ exports.updateTopic = async (request, response, next) => {
         if (!updatedTopic) {
             return responder(response, false, 'ERROR_UPDATING_TOPIC', null);
         }
-        return responder(response, true, 'TOPIC_UPDATED_SUCCESSFULLY', await new UpdateTopicResponse(updatedTopic).exec()); 
+        return responder(response, true, 'TOPIC_UPDATED_SUCCESSFULLY'); 
 
     } catch (error) {
         console.error('Error updating topic:', error);

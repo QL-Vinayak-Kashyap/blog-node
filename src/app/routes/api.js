@@ -23,7 +23,7 @@ router.get('/getUserDetailsByToken',isAuthenticated, UserController.getUserDetai
 
 // Topic related routes
 
-router.get('/topics/:userId',isAuthenticated, validations.getTopicsByUserIdRules(), validations.validate, TopicController.getTopicsByUserId);
+router.get('/topics',isAuthenticated,  TopicController.getTopicsByUserId);
 router.post('/create-topic',isAuthenticated, validations.createTopicRules(), validations.validate, isAuthor, TopicController.createTopic);
 router.put('/update-topic/:id',isAuthenticated, validations.updateTopicRules(), validations.validate, isAuthor, TopicController.updateTopic);
 router.delete('/delete-topic/:id',  isAuthenticated, isAuthor, TopicController.deleteTopic);

@@ -11,13 +11,9 @@ exports.createTopic = async (topicData) => {
 }
 
 exports.getTopicById = async (topicId) => {
-    const topic = await Topic.findByPk(3);
-    if (!topic) {
-        return null;
-    }
-    return topic;   
+    return Topic.findByPk(topicId);
 }
-
+    
 exports.updateTopic = async (topicId, updateData) => {
     return Topic.update(updateData, {
         where: { id: topicId }

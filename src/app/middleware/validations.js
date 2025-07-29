@@ -24,9 +24,9 @@ exports.getUserDetailByIdRules = () => [
     param('userId').not().isEmpty().isNumeric(),
 ]
 
-exports.getTopicsByUserIdRules = () => [
-    body('userId').not().isEmpty().isNumeric(),
-]
+// exports.getTopicsByUserIdRules = () => [
+//     body('userId').not().isEmpty().isNumeric(),
+// ]
 
 exports.createTopicRules = () => [
     body('name').not().isEmpty().isLength({ min: 3 }),

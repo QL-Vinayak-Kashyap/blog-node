@@ -37,7 +37,7 @@ module.exports = {
     "IMAGE_UPLOADED_SUCCESSFULLY": "Image uploaded successfully",
     "ERROR_UPLOADING_IMAGE": "An error occurred while uploading the image",
     "IMAGE_NOT_UPLOADED": "No image uploaded",
-    "ERROR_SAVING_IMAGE": "An error occurred while saving the image",
+    "ERROR_SAVING_POST_IMAGE_AND_POST": "An error occurred while saving the image",
     "ACTIVITY_CREATED_SUCCESSFULLY": "Activity created successfully",
     "ERROR_CREATING_ACTIVITY": "An error occurred while creating the activity",
     "ACTIVITY_NOT_FOUND": "Activity not found",
