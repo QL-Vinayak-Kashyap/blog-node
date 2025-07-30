@@ -38,9 +38,7 @@ exports.addActivity = async (req, res, next) => {
 exports.getActivityByPostId = async (req, res, next) => {
     try {
         const postId = req.params.postId; // Assuming post ID is passed as a URL parameter
-        if (!postId) {
-            return responder(res, 400, 'POST ID IS REQUIRED');
-        }
+
         const activities = await ActivityService.getActivitiesByPostId(postId);
         if (!activities || activities.length === 0) {
             return responder(res, 404, 'NO ACTIVITIES FOUND FOR THIS POST');
@@ -56,10 +54,7 @@ exports.updateActivity = async (req, res, next) => {
     try {
         const activityId = req.params.activityId;
         const updatedData = req.body;
-
-        if (!activityId || !updatedData) {
-            return responder(res, 400, 'ACTIVITY ID AND UPDATED DATA ARE REQUIRED');
-        }
+        
         if(updatedData.activityType === 'LIKE') {
          const deletedActivity = await ActivityService.deleteActivity(activityId);
              if (!deletedActivity) {

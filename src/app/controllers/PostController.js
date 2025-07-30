@@ -48,7 +48,7 @@ exports.getPostsByTopicId = async (request, response, next) => {
         const topicId = request.params.topicId; // Assuming topic ID is passed as a URL parameter
         // Fetch posts associated with the topic
         const posts = await PostService.getPostsByTopicId(topicId);
-        if (!posts || posts.length === 0) {
+        if (posts.length === 0) {
             return responder(response, true, 'POSTS_NOT_FOUND', null);
         }
 

@@ -30,7 +30,7 @@ router.delete('/delete-topic/:id',  isAuthenticated, isAuthor, TopicController.d
 
 // Post related routes
 
-router.post('/create-post',isAuthenticated, validations.createPostRules(), validations.validate , isAuthor, upload.single('postImage') , PostController.createPost);
+router.post('/create-post',isAuthenticated, validations.createPostRules(), validations.validate , isAuthor, upload.single('post_image') , PostController.createPost);
 router.get('/post/:id', isAuthenticated,validations.getPostByIdRules(), validations.validate, PostController.getPostById);
 router.get('/postsByTopic/:topicId', isAuthenticated,validations.getPostByTopicRules(), validations.validate, PostController.getPostsByTopicId);
 router.get('/postsByUser/:userId', isAuthenticated, isAuthor, validations.getPostByUserRules(), validations.validate, PostController.getPostsByUserId);

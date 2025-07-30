@@ -77,7 +77,7 @@ exports.getActivityRules =() => [
 exports.createActivityRules = () => [
     body('user_id').not().isEmpty().isNumeric(),
     body('post_id').not().isEmpty().isNumeric(),
-    body('activityType').not().isEmpty().isIn(['LIKE', 'COMMENT']),
+    body('activity_type').not().isEmpty().isIn(['LIKE', 'COMMENT']),
     body('like').optional().isString(), // Assuming content is optional for comments or shares
     body('comment').optional().isString(), // Assuming content is optional for comments
 ]
