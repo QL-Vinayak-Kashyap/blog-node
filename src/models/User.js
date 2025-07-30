@@ -1,5 +1,7 @@
 const { DataTypes, Model } = require("sequelize");
-const sequelize = require("../../config/databases");
+const sequelize = require("../config/databases");
+const Topic = require("./Topic");
+const Post = require("./Post");
 
 class User extends Model { }
 
@@ -29,6 +31,10 @@ User.init(
     password: {
       type: DataTypes.STRING(100), // match DB
       allowNull: false,
+    },
+    is_deleted :{
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
     }
   },
   {
@@ -38,8 +44,35 @@ User.init(
     timestamps: true,
     createdAt: "created_at",
     updatedAt: "updated_at",
-    underscored: true, // optional but matches snake_case style
   }
 );
+
+User.hasMany(
+  Topic, // Assuming you have a Topic model
+  {
+    foreignKey: "user_id",
+    as: "topics", // Alias for the association
+    onDelete: "CASCADE", // Optional: define what happens on delete
+  }
+)
+
+Topic.belongsTo(User,{
+  foreignKey: "user_id",
+  as: "user", // Alias for the association
+});
+
+User.hasMany(
+  Post, // Assuming you have a Post model
+  {
+    foreignKey: "user_id",
+    as: "post", // Alias for the association
+    onDelete: "CASCADE", // Optional: define what happens on delete
+  }
+);
+
+Post.belongsTo(User, {
+  foreignKey: "user_id",  
+  as: "user", // Alias for the association
+});
 
 module.exports = User;

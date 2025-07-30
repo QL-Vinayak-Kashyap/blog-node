@@ -4,6 +4,6 @@ module.exports = (response, status, messageCode, data, httpCode=200)=>{
         status,
         statusCode: messageCode,
         message: responses[messageCode] || 'No message found',
-        data
+        data: data || null
     });
-}   
+} 

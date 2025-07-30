@@ -1,8 +1,8 @@
-const Topic = require('../Models/Topic'); // Assuming you have a Topic model defined
+const Topic = require('../models/Topic'); // Assuming you have a Topic model defined
 
 exports.getTopicsByUserId =async (userId) =>{
     return Topic.findAll({
-        where: { userId: userId }
+        where: { user_id: userId }
     });
 }
 
@@ -13,7 +13,7 @@ exports.createTopic = async (topicData) => {
 exports.getTopicById = async (topicId) => {
     return Topic.findByPk(topicId);
 }
-
+    
 exports.updateTopic = async (topicId, updateData) => {
     return Topic.update(updateData, {
         where: { id: topicId }
